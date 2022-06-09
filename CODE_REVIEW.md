@@ -30,6 +30,5 @@ After running LightHouse extension following two accessibility issues detected:
 ## Manual Accessibility Checklist
 
 - Able to navigate with help of only keyboard. ✅
-- Turned off images and still things made sense. ✅
-- Dark theme.
+- Turned off images and still content was understandable. ✅
 - Color of Nav bar `(#fc4081)` is not same as T-Mobile's logo color `(#e20474)`.
