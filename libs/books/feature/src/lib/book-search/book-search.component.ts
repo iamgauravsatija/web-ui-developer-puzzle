@@ -9,6 +9,7 @@ import {
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
+import * as debounce from 'lodash/debounce'
 
 @Component({
   selector: 'tmo-book-search',
@@ -59,4 +60,11 @@ export class BookSearchComponent implements OnInit {
       this.store.dispatch(clearSearch());
     }
   }
+
+
+  searchBooksInputEvent = debounce(
+    function() {
+      this.searchBooks();
+    }, 500
+  );
 }
