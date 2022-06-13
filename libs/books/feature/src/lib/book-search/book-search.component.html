@@ -36,6 +36,7 @@
               color="primary"
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
+              (click)="openSnackBar(b)"
             >
               Want to Read
             </button>

@@ -41,3 +41,34 @@ export const removeFromReadingListSuccess = createAction(
   '[Reading List API] Remove from list success',
   props<{ item: ReadingListItem }>()
 );
+
+export const undoAddToReadingList = createAction(
+  '[Reading List API] Undo add to list',
+  props<{ book: Book  }>()
+);
+
+export const undoAddToReadingListFailure = createAction(
+  '[Reading List API] Undo add to list failure',
+  props<{ book: Book }>()
+);
+
+export const undoAddToReadingListSuccess = createAction(
+  '[Reading List API] Undo add to list success',
+  props<{ book: Book }>()
+);
+
+
+export const undoRemoveFromReadingList = createAction(
+  '[Reading List API] Undo remove from reading list',
+  props<{ book: Book }>()
+);
+
+export const undoRemoveFromReadingListFailure = createAction(
+  '[Reading List API] Undo remove from reading list failure',
+  props<{ book: Book }>()
+);
+
+export const undoRemoveFromReadingListSuccess = createAction(
+  '[Reading List API] Undo remove from reading list success',
+  props<{ book: Book }>()
+);
