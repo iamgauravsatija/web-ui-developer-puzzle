@@ -11,4 +11,24 @@ describe('When: I use the reading list feature', () => {
       'My Reading List'
     );
   });
+
+  /*
+  - Then: Mark book as read
+    - click on "Want to Read"
+    - To do: checkbox click mark as read
+    - Assert: check if button is checked and disabled
+    - Assert: check if date is current date
+    - close the reading list
+    - check if want to read has changed to "Finished" and disabled
+
+    Find a way to get size of reading list
+  */
+  
+  it('Then: Mark book as read', () => {
+
+    cy.get(':nth-child(1) > .reading-list-item--checkbox-section').click();
+
+    
+  });
+
 });

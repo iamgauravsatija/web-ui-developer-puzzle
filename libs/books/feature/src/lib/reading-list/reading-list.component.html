@@ -9,18 +9,17 @@
         {{ b.authors.join(',') }}
       </div>
     </div>
-    <div>
-      <section class="reading-list-item--checkbox-section">
-        <mat-checkbox 
-        class="reading-list-item--checkbox-margin"
-        [checked]="b.finished"
-        [disabled]="b.finished"
-        [color]="primary"
-        [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
-        (click)="markAsRead(b)"
-          >Read
-        </mat-checkbox>
-      </section>
+    <div class="reading-list-item--checkbox-section">
+      <mat-checkbox 
+      class="reading-list-item--checkbox-margin"
+      id = "reading-list-item--read-checkbox"
+      [checked]="b.finished"
+      [disabled]="b.finished"
+      [color]="primary"
+      [aria-label]="'Mark ' + b.title + ' as finished'"
+      (click)="markAsRead(b)"
+        >Read
+      </mat-checkbox>
     </div>
     <div>
       <button
