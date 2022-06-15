@@ -41,3 +41,19 @@ export const removeFromReadingListSuccess = createAction(
   '[Reading List API] Remove from list success',
   props<{ item: ReadingListItem }>()
 );
+
+
+export const markAsRead = createAction(
+  '[Reading List API] Mark as read',
+  props<{ item: ReadingListItem, finished, finishedDate }>()
+);
+
+export const markAsReadFailure = createAction(
+  '[Reading List API] Mark as read failure',
+  props<{ item: ReadingListItem }>()
+);
+
+export const markAsReadSuccess = createAction(
+  '[Reading List API] Mark as read success',
+  props<{ item: ReadingListItem, finished: String, finishedDate: String }>()
+);

@@ -10,6 +10,19 @@
       </div>
     </div>
     <div>
+      <section class="reading-list-item--checkbox-section">
+        <mat-checkbox 
+        class="reading-list-item--checkbox-margin"
+        [checked]="b.finished"
+        [disabled]="b.finished"
+        [color]="primary"
+        [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
+        (click)="markAsRead(b)"
+          >Read
+        </mat-checkbox>
+      </section>
+    </div>
+    <div>
       <button
         mat-icon-button
         color="warn"
@@ -18,6 +31,9 @@
       >
         <mat-icon>remove_circle</mat-icon>
       </button>
+    </div>
+    <div *ngIf="b.finished" class="reading-list-item--details">
+      <em>Finished: {{ b.finishedDate | date: 'mediumDate' }}</em>
     </div>
   </div>
 </ng-container>

@@ -11,6 +11,7 @@ import { BooksFeatureModule } from '@tmo/books/feature';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
+    MatCheckboxModule,
     BooksFeatureModule,
     StoreModule.forRoot(
       {},
