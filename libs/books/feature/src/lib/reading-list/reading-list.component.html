@@ -13,9 +13,9 @@
       <mat-checkbox
       class="reading-list-item--checkbox-margin"
       data-cy="reading-list-item--read-checkbox"
-      checked="{{b.finished}}"
-      disabled="{{b.finished}}"
-      [color]="primary"
+      checked={{b.finished}}
+      disabled="{{b.finished?true:false}}"
+      color="primary"
       [aria-label]="'Mark ' + b.title + ' as finished'"
       (click)="markAsRead(b)"
         >Read
