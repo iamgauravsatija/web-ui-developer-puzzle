@@ -16,9 +16,13 @@ describe('When: Use the search feature', () => {
 
     cy.get('input[type="search"]').type('java');
     
+    cy.wait(500);
+    
     cy.get('[data-testing="book-item"]').should('have.length.greaterThan', 1);
     
     cy.get('input[type="search"]').type('script');
+
+    cy.wait(500);
     
     cy.get('[data-testing="book-item"]').should('have.length.greaterThan', 1);
 
