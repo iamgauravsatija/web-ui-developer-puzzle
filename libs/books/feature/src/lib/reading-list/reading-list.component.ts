@@ -21,10 +21,4 @@ export class ReadingListComponent {
     this.store.dispatch(removeFromReadingList({ item }));
   }
 
-  openSnackBar(book: Book) {
-    let snackBarRef = this._snackBar.open("Removed: "+ book.title, "Undo", { duration:2000});
-    snackBarRef.onAction().subscribe(() => {
-      this.store.dispatch(undoRemoveFromReadingList({ book }))
-    });
-  }
 }

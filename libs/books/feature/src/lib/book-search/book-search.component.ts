@@ -64,10 +64,4 @@ export class BookSearchComponent implements OnInit {
     }
   }
 
-  openSnackBar(book: Book) {
-    let snackBarRef = this._snackBar.open("Added: "+ book.title, "Undo", { duration:2000 });
-    snackBarRef.onAction().subscribe(() => {
-      this.store.dispatch(undoAddToReadingList({ book }))
-    });
-  }
 }

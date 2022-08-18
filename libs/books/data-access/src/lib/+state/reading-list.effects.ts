@@ -5,6 +5,9 @@ import { of } from 'rxjs';
 import { catchError, concatMap, exhaustMap, map } from 'rxjs/operators';
 import { ReadingListItem } from '@tmo/shared/models';
 import * as ReadingListActions from './reading-list.actions';
+import { Store } from '@ngrx/store';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Injectable()
 export class ReadingListEffects implements OnInitEffects {
@@ -29,7 +32,10 @@ export class ReadingListEffects implements OnInitEffects {
       ofType(ReadingListActions.addToReadingList),
       concatMap(({ book }) =>
         this.http.post('/api/reading-list', book).pipe(
-          map(() => ReadingListActions.addToReadingListSuccess({ book })),
+          map(() => {
+            this.openSnackBarUndoAdd(book);
+            return ReadingListActions.addToReadingListSuccess({ book })
+          }),
           catchError(() =>
             of(ReadingListActions.addToReadingListFailure({ book }))
           )
@@ -43,9 +49,10 @@ export class ReadingListEffects implements OnInitEffects {
       ofType(ReadingListActions.removeFromReadingList),
       concatMap(({ item }) =>
         this.http.delete(`/api/reading-list/${item.bookId}`).pipe(
-          map(() =>
-            ReadingListActions.removeFromReadingListSuccess({ item })
-          ),
+          map(() => {
+            this.openSnackBarUndoRemove(item);
+            return ReadingListActions.removeFromReadingListSuccess({ item })
+          }),
           catchError(() =>
             of(ReadingListActions.removeFromReadingListFailure({ item }))
           )
@@ -89,5 +96,21 @@ export class ReadingListEffects implements OnInitEffects {
     return ReadingListActions.init();
   }
 
-  constructor(private actions$: Actions, private http: HttpClient) {}
+  constructor(private actions$: Actions, private http: HttpClient, 
+    private readonly store: Store, private _snackBar: MatSnackBar) {}
+
+  openSnackBarUndoRemove(book) {
+    let snackBarRef = this._snackBar.open("Removed: "+ book.title, "Undo", { duration:2000});
+    snackBarRef.onAction().subscribe(() => {
+      this.store.dispatch(ReadingListActions.undoRemoveFromReadingList({ book }))
+    });
+  }
+
+  openSnackBarUndoAdd(book) {
+    let snackBarRef = this._snackBar.open("Added: "+ book.title, "Undo", { duration:2000 });
+    snackBarRef.onAction().subscribe(() => {
+      this.store.dispatch(ReadingListActions.undoAddToReadingList({ book }))
+    });
+  }
+
 }
