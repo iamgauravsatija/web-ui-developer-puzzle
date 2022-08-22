@@ -6,6 +6,16 @@ describe('When: Use the search feature', () => {
       countBefore = $elem.text();
       cy.log(countBefore, $elem.text())
     })
+    if( Number(countBefore) > 0){
+      cy.get('[data-testing="toggle-reading-list"]').click();
+      for (let i = Number(countBefore); i>0; i--){
+        cy.get(':nth-child(1) > :nth-child(3) > .mat-focus-indicator').click();
+      }
+      cy.get('tmo-total-count').then(($elem) => {
+        countBefore = $elem.text();
+        cy.log(countBefore, $elem.text())
+      })
+    }
   });
 
   it('Then: I should be able to search books by title', () => {
