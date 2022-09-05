@@ -45,15 +45,15 @@ export const removeFromReadingListSuccess = createAction(
 
 export const markAsRead = createAction(
   '[Reading List API] Mark as read',
-  props<{ item: ReadingListItem, finished, finishedDate }>()
+  props<{ item: ReadingListItem }>()
 );
 
 export const markAsReadFailure = createAction(
   '[Reading List API] Mark as read failure',
-  props<{ item: ReadingListItem }>()
+  props<{ error: string }>()
 );
 
 export const markAsReadSuccess = createAction(
   '[Reading List API] Mark as read success',
-  props<{ item: ReadingListItem, finished: String, finishedDate: String }>()
+  props<{ item: ReadingListItem, finished: boolean, finishedDate: string }>()
 );
