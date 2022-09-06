@@ -1,23 +1,23 @@
 <ng-container *ngIf="(readingList$ | async).length > 0; else empty">
-  <div class="reading-list-item" *ngFor="let b of readingList$ | async">
+  <div class="reading-list-item" *ngFor="let item of readingList$ | async">
     <div>
-      <img class="reading-list-item--cover" [src]="b.coverUrl" alt="{{b.title}} cover image"/>
+      <img class="reading-list-item--cover" [src]="item.coverUrl" alt="{{item.title}} cover image"/>
     </div>
     <div class="reading-list-item--details">
-      <strong class="reading-list-item--details--title">{{ b.title }}</strong>
+      <strong class="reading-list-item--details--title">{{ item.title }}</strong>
       <div class="reading-list-item--details--author">
-        {{ b.authors.join(',') }}
+        {{ item.authors.join(',') }}
       </div>
     </div>
     <div class="reading-list-item--checkbox-section">
       <mat-checkbox
       class="reading-list-item--checkbox-margin"
       data-cy="reading-list-item--read-checkbox"
-      checked={{b.finished}}
-      disabled="{{b.finished?true:false}}"
+      checked={{item.finished}}
+      disabled="{{item.finished?true:false}}"
       color="primary"
-      [aria-label]="'Mark ' + b.title + ' as finished'"
-      (click)="markAsRead(b)"
+      [aria-label]="'Mark ' + item.title + ' as finished'"
+      (click)="markAsRead(item)"
         >Read
       </mat-checkbox>
     </div>
@@ -25,15 +25,15 @@
       <button
         mat-icon-button
         color="warn"
-        [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
-        (click)="removeFromReadingList(b)"
+        [attr.aria-label]="'Remove ' + item.title + ' from reading list'"
+        (click)="removeFromReadingList(item)"
         data-testid="remove-book-from-reading-list"
       >
         <mat-icon>remove_circle</mat-icon>
       </button>
     </div>
     <div *ngIf="b.finished" class="reading-list-item--details">
-      <em>Finished: {{ b.finishedDate | date: 'mediumDate' }}</em>
+      <em>Finished: {{ item.finishedDate | date: 'mediumDate' }}</em>
     </div>
   </div>
 </ng-container>

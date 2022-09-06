@@ -20,13 +20,13 @@ export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
   readingList: ReadingListItem[];
 
-  searchForm = this.fb.group({
+  searchForm = this.formBuilder.group({
     term: ''
   });
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly formBuilder: FormBuilder
   ) {}
 
   get searchTerm(): string {
@@ -58,7 +58,7 @@ export class BookSearchComponent implements OnInit {
   }
 
   searchBooks() {
-    if (this.searchForm.value.term) {
+    if (this.searchForm.valid && this.searchForm.value.term) {
       this.store.dispatch(searchBooks({ term: this.searchTerm }));
     } else {
       this.store.dispatch(clearSearch());
