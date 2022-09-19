@@ -18,7 +18,6 @@ export class ReadingListComponent {
   }
 
   markAsRead(item: ReadingListItem){
-    // this.store.dispatch(markAsRead({ item, finished:true, finishedDate:new Date().toISOString()  }));
     this.store.dispatch(markAsRead({ item }));
   }
 }

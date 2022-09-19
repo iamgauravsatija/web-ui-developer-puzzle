@@ -32,7 +32,7 @@
         <mat-icon>remove_circle</mat-icon>
       </button>
     </div>
-    <div *ngIf="b.finished" class="reading-list-item--details">
+    <div *ngIf="item.finished" class="reading-list-item--details">
       <em>Finished: {{ item.finishedDate | date: 'mediumDate' }}</em>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   addToReadingList,
@@ -10,15 +10,18 @@ import {
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book, ReadingListItem } from '@tmo/shared/models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit {
+export class BookSearchComponent implements OnInit, OnDestroy {
   books: ReadingListBook[];
   readingList: ReadingListItem[];
+  bookSearchSubscription$: Subscription;
+  getBooksSubscription$: Subscription;
 
   searchForm = this.formBuilder.group({
     term: ''
@@ -34,10 +37,10 @@ export class BookSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(getAllBooks).subscribe(books => {
+    this.getBooksSubscription$ = this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
     });
-    this.store.select(getReadingList).subscribe(items =>{
+    this.bookSearchSubscription$ = this.store.select(getReadingList).subscribe(items =>{
       this.readingList = items;
     })
   }
@@ -77,6 +80,11 @@ export class BookSearchComponent implements OnInit {
     }
 
     return false;
+  }
+
+  ngOnDestroy(): void {
+    this.getBooksSubscription$.unsubscribe()
+    this.bookSearchSubscription$.unsubscribe();
   }
 
 }
