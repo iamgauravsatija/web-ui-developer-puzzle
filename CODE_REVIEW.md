@@ -6,7 +6,7 @@
 
 After going through the code I found following problems in the code under `libs/books`
 
-- **Memory Leak:** In the book-search.component.ts `getBooks` and `readingList` subscribtions where never unsubscribed. So, I used Angular's OnDestroy function to unscrubscibe the above.
+1. **Memory Leak:** In the book-search.component.ts `getBooks` and `readingList` subscribtions where never unsubscribed. So, I used Angular's OnDestroy function to unscrubscibe the above.
 
 ![ngOnDestroy](ngOnDestroy.png)
 ![compareSubscribe](compareSubscribe.png)
@@ -32,11 +32,19 @@ After going through the code I found following problems in the code under `libs/
 
 After running LightHouse extension following two accessibility issues detected:
 
-1. Search button don't have accessibility name:
+1. Search button don't have accessibility name. Added aria-label:
+![submit A11y](submitA11y.png)
+![submit button changes](addedAriaLabel.png)
+
 2. Background and foreground colors do not have a sufficient contrast ratio.
 
 ## Manual Accessibility Checklist
 
 - Able to navigate with help of only keyboard. ✅
+
 - Turned off images and still content was understandable. ✅
+
+![booksAltImage](booksAltImage.png)
+![readingListAltImages](readingListAltImages.png)
+
 - Color of Nav bar `(#fc4081)` is not same as T-Mobile's logo color `(#e20474)`.
