@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   addToReadingList,
@@ -10,14 +10,17 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
 import * as debounce from 'lodash/debounce'
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit {
+export class BookSearchComponent implements OnInit, OnDestroy {
   books: ReadingListBook[];
+  bookSearchSubs$: Subscription;
 
   searchForm = this.fb.group({
     term: ''
@@ -55,16 +58,16 @@ export class BookSearchComponent implements OnInit {
 
   searchBooks() {
 
-    this.searchForm.get('term')
-      .valueChanges
-      .subscribe( () => {
-        if (this.searchForm.value.term) {
-          this.store.dispatch(searchBooks({ term: this.searchTerm }));
+    this.bookSearchSubs$ = this.searchForm
+      .get('term')
+      .valueChanges.pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((newValue) => {
+        if (newValue) {
+          this.store.dispatch(searchBooks({ term: newValue }));
         } else {
           this.store.dispatch(clearSearch());
-        }  
-      }
-    )
+        }
+    });
   }
 
 
@@ -73,4 +76,8 @@ export class BookSearchComponent implements OnInit {
       this.searchBooks();
     }, 500
   );
+
+  ngOnDestroy(){
+    this.bookSearchSubs$.unsubscribe();
+  }
 }
