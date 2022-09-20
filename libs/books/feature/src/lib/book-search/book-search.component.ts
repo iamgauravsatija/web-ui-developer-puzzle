@@ -5,10 +5,11 @@ import {
   clearSearch,
   getAllBooks,
   ReadingListBook,
-  searchBooks
+  searchBooks,
+  getReadingList
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
-import { Book } from '@tmo/shared/models';
+import { Book, ReadingListItem } from '@tmo/shared/models';
 
 @Component({
   selector: 'tmo-book-search',
@@ -17,6 +18,7 @@ import { Book } from '@tmo/shared/models';
 })
 export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
+  readingList: ReadingListItem[];
 
   searchForm = this.fb.group({
     term: ''
@@ -35,6 +37,9 @@ export class BookSearchComponent implements OnInit {
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
     });
+    this.store.select(getReadingList).subscribe(items =>{
+      this.readingList = items;
+    })
   }
 
   formatDate(date: void | string) {
@@ -59,4 +64,19 @@ export class BookSearchComponent implements OnInit {
       this.store.dispatch(clearSearch());
     }
   }
+
+  checkIfFinished(bookId: String){
+    const index = this.readingList.findIndex(item=> item.bookId === bookId);
+
+    if(index > -1){
+      if(this.readingList[index].finished===true){
+        return true;
+      } else {
+        return false
+      }
+    }
+
+    return false;
+  }
+
 }

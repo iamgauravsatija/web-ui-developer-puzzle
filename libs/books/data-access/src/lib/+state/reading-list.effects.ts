@@ -29,9 +29,9 @@ export class ReadingListEffects implements OnInitEffects {
       ofType(ReadingListActions.addToReadingList),
       concatMap(({ book }) =>
         this.http.post('/api/reading-list', book).pipe(
-          map(() => ReadingListActions.confirmedAddToReadingList({ book })),
+          map(() => ReadingListActions.addToReadingListSuccess({ book })),
           catchError(() =>
-            of(ReadingListActions.failedAddToReadingList({ book }))
+            of(ReadingListActions.addToReadingListFailure({ book }))
           )
         )
       )
@@ -44,10 +44,25 @@ export class ReadingListEffects implements OnInitEffects {
       concatMap(({ item }) =>
         this.http.delete(`/api/reading-list/${item.bookId}`).pipe(
           map(() =>
-            ReadingListActions.confirmedRemoveFromReadingList({ item })
+            ReadingListActions.removeFromReadingListSuccess({ item })
           ),
           catchError(() =>
-            of(ReadingListActions.failedRemoveFromReadingList({ item }))
+            of(ReadingListActions.removeFromReadingListFailure({ item }))
+          )
+        )
+      )
+    )
+  );
+
+  markAsRead$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReadingListActions.markAsRead),
+      concatMap(({ item }) =>
+        this.http.put(`/api/reading-list/${item.bookId}/finished`, {bookId: item.bookId, finished: true, finishedDate: new Date().toISOString()}).pipe(
+          map(() => ReadingListActions.markAsReadSuccess({ item, finished: true, finishedDate: new Date().toISOString() }) // Find a better way to change the finished value and date
+          ),
+          catchError((error) =>
+            of(ReadingListActions.markAsReadFailure({ error }))
           )
         )
       )
