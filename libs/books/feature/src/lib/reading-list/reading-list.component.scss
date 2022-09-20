@@ -40,6 +40,14 @@
   white-space: nowrap;
 }
 
+.reading-list-item--checkbox-section {
+  visibility: visible;
+}
+
+.reading-list-item--checkbox-margin {
+  margin: 0 12px;
+}
+
 .empty {
   font-weight: 100;
   font-size: 1rem;
