@@ -46,7 +46,7 @@ describe('When: I use the reading list feature', () => {
     cy.get('[data-cy="reading-list-item--read-checkbox"]').click();
     cy.get('[data-cy="reading-list-item--read-checkbox"] input').should('be.checked');
     let date = format(new Date(), 'MMM DD, YYYY');
-    let regex = " 0";
+    const regex = " 0";
     date = date.replace(regex, ' ');
     cy.log(date);
     cy.get('em').should('contain.text', 'Finished: ' +  date);
